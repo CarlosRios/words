@@ -18,6 +18,7 @@ export default class State {
 
         // Current index in the game
         this.currentLetterPosition = 0
+        this.currentLetter = this.activeWordLetters[ this.currentLetterPosition ]
     }
 
     changeActiveWord( index = 0 ) {
@@ -25,6 +26,11 @@ export default class State {
         this.activeWordPosition = index
         this.activeWordObject = this.words[ this.activeWordPosition ]
         this.activeWordLetters = this.activeWordObject.word.split('')
+        this.currentError = 0
+    }
+
+    getCurrentLetter() {
+        return this.currentLetter = this.activeWordLetters[ this.currentLetterPosition ]
     }
 
 }

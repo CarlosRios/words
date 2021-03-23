@@ -8,7 +8,7 @@ export default class View {
         this.items = document.querySelector( '.items' )
         this.stage = document.querySelector( '.stage' )
         this.heading = document.createElement( 'h1' )
-        this.letters = [] // an array of each of the letter elements
+        this.letters = [] // an array of each of the letter DOM elements
 
         // Audio elements
         this.audio = new Audio

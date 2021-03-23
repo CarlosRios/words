@@ -62,70 +62,72 @@ const errorMessages = [
 ]
 
 var view = new View()
-var app = new State( words, errorMessages )
+var game = new State( words, errorMessages )
 
 // Inject the words into the DOM
-app.words.forEach( function(word, index) {
+game.words.forEach( function(word, index) {
     let item = view.createThumbnail( word )
 
     // Change the activeWord in the global state when an item is clicked
     // Update the stage
     // Update the audio
     item.addEventListener( 'click' , e => {
-        app.changeActiveWord( index )
+        game.changeActiveWord( index )
         
         // Change audio source in the view controller
-        view.audio.src = app.activeWordObject.audio
+        view.audio.src = game.activeWordObject.audio
         view.audio.volume = 0.2
         view.audio.play()
 
         // Update the stage
-        view.buildLetters( app.activeWordLetters )
+        view.buildLetters( game.activeWordLetters )
     })
 });
 
 // Fires everytime a key is pressed.
 // This is the game logic.
 document.addEventListener('keypress', e => {
+    console.log( game )
+
     // Store the current letter here because its easier to deal with
-    let currentLetter = app.activeWordLetters[app.currentLetterPosition]
+    let currentLetter = game.getCurrentLetter()
 
     // Check if the new letter is a space, and skip it if it is.
     // Update the currentLetter variable to the next letter
     if (currentLetter === ' ') {
-        app.currentLetterPosition++
-        currentLetter = app.activeWordLetters[app.currentLetterPosition]
+        game.currentLetterPosition++
+        currentLetter = game.getCurrentLetter()
     }
 
     // Toggle the music with DELETE keye
-    if( e.code === 'Backspace' && view.audio.paused ) {
-        view.audio.play()
-        return
-    } else if ( e.code === 'Backspace' ) {
-        view.audio.pause()
-        return
+    if( e.code === 'Backspace' ) {
+        if( view.audio.paused ) {
+            view.audio.play()
+        } else {
+            view.audio.pause()
+        }
     }
 
     // The actual letter in the DOM
-    let currentLetterElement = view.letters[app.currentLetterPosition]
+    let currentLetterElement = view.letters[game.currentLetterPosition]
 
     // Checks if the current key pressed is correct
     if( currentLetter === e.key || currentLetter === e.key.toUpperCase() ) {
         // Change the color of the correct letter
-        currentLetterElement.style.color = app.activeWordObject.color
+        currentLetterElement.style.color = game.activeWordObject.color
         
-        app.currentLetterPosition++
+        game.currentLetterPosition++
 
         // Checks if the entire word was successful
         // Compares the index to the length of the word
-        if ( app.activeWordLetters.length <= app.currentLetterPosition ) {
+        if ( game.activeWordLetters.length <= game.currentLetterPosition ) {
 
             // This needs to take place outside of the transition
-            app.activeWordPosition++
-            app.changeActiveWord( app.activeWordPosition )
+            game.activeWordPosition++
+            game.changeActiveWord( game.activeWordPosition )
 
             // Change audio source in the view controller
-            view.audio.src = app.activeWordObject.audio
+            view.audio.src = game.activeWordObject.audio
             view.audio.volume = 0.2
             view.audio.play()
 
@@ -138,21 +140,22 @@ document.addEventListener('keypress', e => {
                 view.heading.classList.remove( 'success' )
 
                 // Reset the index and re-render the heading
-                view.buildLetters( app.activeWordLetters )
+                view.buildLetters( game.activeWordLetters )
             })
-
-        } // this is something new
+        }
     }
     // If the key is incorrect
     else {
-        if ( app.currentError >= app.errorMessages.length ) {
-            app.currentError = 0
+
+        // Handles error messages. Makes sure there aren't more messages than the array supplies.
+        if ( game.currentError >= game.errorMessages.length ) {
+            game.currentError = 0
         }
     
-        view.error.src = './assets/audio/' + app.errorMessages[ app.currentError ]
+        view.error.src = './assets/audio/' + game.errorMessages[ game.currentError ]
         view.error.play()
 
-        app.currentError++
+        game.currentError++
 
         currentLetterElement.classList.add( 'error' )
         currentLetterElement.addEventListener('transitionend', (e) => {

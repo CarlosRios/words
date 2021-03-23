@@ -141,7 +141,7 @@ document.addEventListener('keypress', e => {
                 view.buildLetters( app.activeWordLetters )
             })
 
-        }
+        } // this is something new
     }
     // If the key is incorrect
     else {

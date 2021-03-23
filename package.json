@@ -1,0 +1,12 @@
+{
+  "name": "Words",
+  "version": "1.0.0",
+  "description": "This is a game I made to help Nathan and Noah learn how to read words, spell, and use a keyboard.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Carlos Rios",
+  "license": "ISC"
+}

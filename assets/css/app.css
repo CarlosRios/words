@@ -5,23 +5,39 @@ body{
     transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     align-items: top;
     margin: 0;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+}
+#container{
+    max-width: 1000px;
+    margin:0 auto;
+}
+header{
+    padding: 3rem;
+}
+header > p {
+    font-size: 1.3rem;
+    font-weight: 200;
+}
+h1 {
+    font-family: "Fredoka One", sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
 }
 #app {
     flex: 1;
     text-align: center;
 }
-h1{
+#app h1{
     padding: 4rem 0;
-    font-size: 200px;
+    font-size: 9rem;
     line-height: 180px;
     color: #cad0d6;
-    font-weight: bold;
-    font-family: 'Fredoka One', sans-serif;
     margin: 0 0 20px;
     transition: all 0.8s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     position: relative;
 }
-h1 span.letter{
+#app h1 span.letter{
     display: inline-block;
     transition: all 0.1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     min-width: 0.3em;
@@ -59,9 +75,10 @@ h1 span.letter{
 }
 .items{
     text-align: center;
-    margin-bottom: 1rem;
-    padding: 3rem 0;
+    margin: 1rem;
+    padding: 3rem;
     background-color: #F1F1F1;
+    border-radius: 30px;
 }
 .avatar{
     width: 150px;
